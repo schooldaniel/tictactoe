@@ -1,6 +1,7 @@
-import java.util.Scanner;
-import java.util.Random;
 
+import java.util.Random;
+import javax.swing.*;
+import java.awt.*;
 /**
  * Write a description of class ticatactoe here.
  *
@@ -9,136 +10,131 @@ import java.util.Random;
  */
 public class Board
 {
-    private int[][] board;
-    private int dimensions = 4;
-    Scanner input = new Scanner(System.in);
+    private static int dimensions = 3;
 
-    public boolean hasFriend() {
-        System.out.println("Do you have friends?");
-        String x = input.nextLine().toLowerCase();
-
-        if (x == "y" || x == "yes") {
-            return true;
-        }
-        else {
-            System.out.println("wow ok");
-            return false;
-        }
-    }
-
-    public void boardDim() {
-        System.out.println("What number of rows and columns would you like?");
-        Integer x = input.nextInt();
-
-        dimensions = x;
-        board = new int[dimensions][dimensions];
-        for (int i = 0; i < dimensions; i++) {
-          for (int j = 0; j < dimensions; j++) {
-            board[i][j] = 0;
-          }
-        }
-    }
-
-    public boolean boardFilled() {
+    public static boolean boardFilled(JButton board[][]) {
       for (int i = 0; i < dimensions; i++) {
           for (int j = 0; j < dimensions; j++) {
-              if (board[i][j] == 0) return false;
+              if (board[i][j].getText().equals("")) return false;
           }
       }
       return true;
     }
 
-    public boolean checkRows() {
-      int last = 6;
+    public static int checkRows(JButton board[][], String startingPlayer) {
+      String last = "";
       for (int i = 0; i < dimensions; i++) {
-        System.out.println(i);
         for (int j = 0; j < dimensions; j++) {
           if (j == 0) {
-            if (board[i][j] != 0) {
-              last = board[i][j];
+            if (!board[i][j].getText().equals("")) {
+              last = board[i][j].getText();
             }
             else {
               break;
             }
           }
-          else if (board[i][j] != last) {
+          else if (!board[i][j].getText().equals(last)) {
             break;
           }
           else {
             if (j == dimensions-1) {
-              return true;
+              if (last.equals(startingPlayer)) {
+                return 1;
+              }
+              else {
+                return 0;
+              }
             }
           }
         }
       }
-      return false;
+      return -1;
     }
-    public boolean checkColumns() {
-      int last = 6;
+
+    public static int checkColumns(JButton board[][], String startingPlayer) {
+      String last = "";
       for (int i = 0; i < dimensions; i++) {
         for (int j = 0; j < dimensions; j++) {
           if (j == 0) {
-            if (board[j][i] != 0) {
-              last = board[j][i];
+            if (!board[i][j].getText().equals("")) {
+              last = board[j][i].getText();
             }
             else {
               break;
             }
           }
-          else if (board[j][i] != last) {
+          else if (!board[i][j].getText().equals(last)) {
             break;
           }
           else {
             if (j == dimensions-1) {
-              return true;
+              if (last.equals(startingPlayer)) {
+                return 1;
+              }
+              else {
+                return 0;
+              }
             }
           }
         }
       }
-      return false;
+      return -1;
     }
-    public boolean checkDiag() {
-      int last = 6;
+
+
+    public static int checkDiag(JButton board[][], String startingPlayer) {
+      String last = "";
       for (int i = 0; i < dimensions; i++) {
         if (i == 0) {
-          if (board[i][i] != 0) {
-            last = board[i][i];
+          if (!board[i][i].getText().equals("")) {
+            last = board[i][i].getText();
           }
           else {
             break;
           }
         }
-        else if (board[i][i] != last) {
+        else if (!board[i][i].getText().equals(last)) {
           break;
         }
         else {
           if (i == dimensions-1) {
-            return true;
+            if (last.equals(startingPlayer)) {
+              return 1;
+            }
+            else {
+              return 0;
+            }
           }
         }
       }
 
       for (int i = 0; i < dimensions; i++) {
         if (i == 0) {
-          if (board[i][board[i].length-i-1] != 0) {
-            last = board[i][board[i].length-i-1];
+          if (!board[i][board[i].length-i-1].getText().equals("")) {
+            last = board[i][board[i].length-i-1].getText();
           }
           else {
             break;
           }
         }
-        else if (board[i][board[i].length-i-1] != last) {
+        else if (!board[i][board[i].length-i-1].getText().equals(last)) {
           break;
         }
         else {
           if (i == dimensions-1) {
-            return true;
+            if (last.equals(startingPlayer)) {
+              return 1;
+            }
+            else {
+              return 0;
+            }
           }
         }
       }
-      return false;
+      return -1;
     }
-    public boolean hasEnded() {
+    /*
+    public static boolean hasEnded() {
 
       if (boardFilled() || checkRows() || checkColumns() || checkDiag()) {
           return true;
@@ -148,7 +144,7 @@ public class Board
       }
     }
 
-    public int[] checkWin() {
+    public static int[] checkWin() {
 
       // DIAGONAL
 
@@ -226,54 +222,5 @@ public class Board
       int[] fail = {-1,-1};
       return fail;
     }
-    public void displayBoard() {
-        for (int i = 0; i < dimensions; i++) {
-            for (int j = 0; j < dimensions; j++) {
-                if (board[i][j] == 0) {
-                  System.out.print("█ ");
-                }
-                else if (board[i][j] == 1) {
-                    System.out.print("X ");
-                }
-                else if (board[i][j] == 2) {
-                    System.out.print("O ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println("\n");
-    }
-
-    public void promptTurn(int playerNum) {
-        System.out.println("\nENTER X");
-        Integer x = input.nextInt();
-        System.out.println("ENTER Y");
-        Integer y = input.nextInt();
-        if (board[x-1][y-1] == 0) {
-            board[x-1][y-1] = playerNum;
-        }
-        else {
-            promptTurn(playerNum);
-        }
-    }
-
-    public void CompTurn() {
-      boolean foundIt = false;
-      int[] winning = checkWin();
-      if (winning[0] != -1) {
-        board[winning[0]][winning[1]] = 1;
-      }
-      else {
-          for (int i = 0; i < dimensions; i++) {
-            for (int j = 0; j < dimensions; j++) {
-                if (board[i][j] == 0) {
-                    board[i][j] = 1;
-                    return;
-                }
-            }
-          }
-      }
-    }
-
-
+    */
 }
