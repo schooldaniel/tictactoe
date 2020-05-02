@@ -146,13 +146,13 @@ public class GUI extends JFrame implements ActionListener
             int ans = Logic.checkWin(square, startingPlayer);
             switch (ans) {
               case 0:
-                JOptionPane.showMessageDialog(null, "Player 2 Won!", "Oops..", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Player 2 Won!", "Oops..", JOptionPane.INFORMATION_MESSAGE);
                 break;
               case 1:
-                JOptionPane.showMessageDialog(null, "Player 1 Won!", "Oops..", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Player 1 Won!", "Oops..", JOptionPane.INFORMATION_MESSAGE);
                 break;
               case 2:
-                JOptionPane.showMessageDialog(null, "Full Board!", "Oops..", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Full Board!", "Oops..", JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
 

@@ -56,14 +56,14 @@ public class Board
       for (int i = 0; i < dimensions; i++) {
         for (int j = 0; j < dimensions; j++) {
           if (j == 0) {
-            if (!board[i][j].getText().equals("")) {
+            if (!board[j][i].getText().equals("")) {
               last = board[j][i].getText();
             }
             else {
               break;
             }
           }
-          else if (!board[i][j].getText().equals(last)) {
+          else if (!board[j][i].getText().equals(last)) {
             break;
           }
           else {
@@ -72,6 +72,7 @@ public class Board
                 return 1;
               }
               else {
+                System.out.println("ED");
                 return 0;
               }
             }

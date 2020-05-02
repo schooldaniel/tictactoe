@@ -31,17 +31,17 @@ public class Logic
 
     public static int checkWin(JButton square[][], String startingPlayer)
     {
-        if (Board.boardFilled(square)) {
-          return 2;
-        }
-        else if (Board.checkRows(square, startingPlayer) != -1) {
+        if (Board.checkRows(square, startingPlayer) != -1) {
           return Board.checkRows(square, startingPlayer);
         }
-        else if (Board.checkColumns(square, startingPlayer) != -1) {
+        if (Board.checkColumns(square, startingPlayer) != -1) {
           return Board.checkColumns(square, startingPlayer);
         }
-        else if (Board.checkDiag(square, startingPlayer) != -1) {
+        if (Board.checkDiag(square, startingPlayer) != -1) {
           return Board.checkDiag(square, startingPlayer);
+        }
+        if (Board.boardFilled(square)) {
+          return 2;
         }
         return -1;
     }
